@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
@@ -23,14 +23,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
   CANSparkMax rightMotor2 = new CANSparkMax(Constants.DriveTrainConstants.rightMotor2ID, MotorType.kBrushed);
   CANSparkMax rightMotor3 = new CANSparkMax(Constants.DriveTrainConstants.rightMotor3ID, MotorType.kBrushed);
 
-  RelativeEncoder leftEncoder = leftMotor1.getEncoder();
-  RelativeEncoder rightEncoder = rightMotor1.getEncoder();
+  //RelativeEncoder leftEncoder = leftMotor1.getEncoder();
+  //RelativeEncoder rightEncoder = rightMotor1.getEncoder();
 
 
   MotorControllerGroup leftControllerGroup = new MotorControllerGroup(leftMotor1, leftMotor2, leftMotor3);
   MotorControllerGroup rightControllerGroup = new MotorControllerGroup(rightMotor1, rightMotor2, rightMotor3);
 
   DifferentialDrive differentialDrive = new DifferentialDrive(leftControllerGroup, rightControllerGroup);
+
+
 
   public DriveTrainSubsystem(){ 
 
@@ -41,10 +43,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
     rightMotor2.restoreFactoryDefaults();
     rightMotor3.restoreFactoryDefaults();
 
+   // leftMotor1.setVoltage(12);
 
 
-    leftEncoder.setPosition(0);
-    rightEncoder.setPosition(0);
+   // leftEncoder.setPosition(0);
+   // rightEncoder.setPosition(0);
 
     leftMotor2.follow(leftMotor1);
     leftMotor3.follow(leftMotor1);
@@ -52,7 +55,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     rightMotor2.follow(rightMotor1);
     rightMotor3.follow(rightMotor1);
 
-
+    System.out.println("Assigning motors");
     rightControllerGroup.setInverted(true);
     leftControllerGroup.setInverted(false);
   }

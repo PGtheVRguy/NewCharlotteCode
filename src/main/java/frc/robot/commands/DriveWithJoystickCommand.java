@@ -16,7 +16,7 @@ public class DriveWithJoystickCommand extends CommandBase {
   /**
    * Creates a new ExampleCommand.
    *
-   * @param subsystem The subsystem used by this command.
+   *. @param subsystem The subsystem used by this command.
    */
   public DriveWithJoystickCommand(DriveTrainSubsystem driveTrainSubsystem) {
     this.driveTrainSubsystem = driveTrainSubsystem;
@@ -33,8 +33,8 @@ public class DriveWithJoystickCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forwardSpeed = RobotContainer.joystick.getX();
-    double turningSpeed = RobotContainer.joystick.getY();
+    double forwardSpeed = RobotContainer.m_driverController.getLeftY();
+    double turningSpeed = RobotContainer.m_driverController.getRightX();
     driveTrainSubsystem.arcadeDrive(forwardSpeed, turningSpeed);
   }
 

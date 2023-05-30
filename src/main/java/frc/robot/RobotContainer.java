@@ -5,12 +5,19 @@
 package frc.robot;
 
 import frc.robot.commands.DriveWithJoystickCommand;
+import frc.robot.commands.MoveArmCommand;
+import frc.robot.commands.IntakeCommand;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.MoveArmSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+//import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+//import frc.robot.subsystems.IntakeSubsystem;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,19 +29,25 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
 
-
+  public static CommandXboxController m_driverController = new CommandXboxController(0);
   //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final MoveArmSubsystem moveArmSubsystem = new MoveArmSubsystem();
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
   private final DriveWithJoystickCommand DriveWithJoystickCommand = new DriveWithJoystickCommand(driveTrainSubsystem);
+  private final MoveArmCommand MoveArmCommand = new MoveArmCommand(moveArmSubsystem, m_driverController);
+  private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem, m_driverController);
 
+ // public static Joystick joystick  = new Joystick(0);
 
-  public static Joystick joystick = new Joystick(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
     driveTrainSubsystem.setDefaultCommand(DriveWithJoystickCommand);
+    moveArmSubsystem.setDefaultCommand(MoveArmCommand);
   }
 
     /**
@@ -47,15 +60,18 @@ public class RobotContainer {
      * joysticks}.
      */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(m_DriveWithJoystickCommand::exampleCondition)
-    //    .onTrue(new ExampleCommand(m_DriveWithJoystickCommand));
+    new Trigger(m_driverController.button(1)).onTrue(MoveArmCommand);
+    new Trigger(m_driverController.button(2)).onTrue(MoveArmCommand);
+    new Trigger(m_driverController.button(4)).onTrue(MoveArmCommand);
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-   // m_driverController.b().whileTrue(m_exampleSubsystem.m_DriveWithJoystickCommand());
+    new Trigger(m_driverController.rightTrigger(0.1))
+      .onTrue(intakeCommand);
+      new Trigger(m_driverController.leftTrigger(0.1))
+      .onTrue(intakeCommand);
+      //new Trigger(m_driverController.pov(180)).onTrue(intakeCommand);
   }
-
+  
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -65,4 +81,5 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return DriveWithJoystickCommand;
   }
+  
 }

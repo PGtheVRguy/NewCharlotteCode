@@ -17,11 +17,19 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   public static final class DriveTrainConstants{
-  public static final int leftMotor1ID = 11; //IDs for the Left and Right motors
-  public static final int leftMotor2ID = 12;
-  public static final int leftMotor3ID = 13;
-  public static final int rightMotor1ID = 21;
-  public static final int rightMotor2ID = 22;
-  public static final int rightMotor3ID = 23;
+    public static final int leftMotor1ID = 11; //IDs for the Left and Right motors
+    public static final int leftMotor2ID = 12;
+    public static final int leftMotor3ID = 13;
+    public static final int rightMotor1ID = 21;
+    public static final int rightMotor2ID = 22;
+    public static final int rightMotor3ID = 23;
   }
+  public static final class IntakeConstants{
+    public static final int intakeMotor1ID = 41;
+    public static final int intakeMotor2ID = 42;
+  }
+  public static final class MoveArmConstants{
+    public static final int ArmMotorID = 51;
+  }
+  public static final double gripTriggerDeadzone = 0.05;
 }
