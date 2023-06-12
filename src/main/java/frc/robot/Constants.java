@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.PIDConstants;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -23,13 +25,19 @@ public final class Constants {
     public static final int rightMotor1ID = 21;
     public static final int rightMotor2ID = 22;
     public static final int rightMotor3ID = 23;
+    public static final int maxVoltage = 8; //If issues arise from recent upgrade, blame this.
   }
   public static final class IntakeConstants{
     public static final int intakeMotor1ID = 41;
     public static final int intakeMotor2ID = 42;
+    public static final double outakeSpeed = 1.00; //0=0%, 1=100%. 
   }
   public static final class MoveArmConstants{
     public static final int ArmMotorID = 51;
+  }
+  public static final class AutonStuff{
+    public static final PIDConstants AUTO_TRANSLATION_CONSTANTS = new PIDConstants(0, 0, 0);
+    public static final PIDConstants AUTO_ROTATION_CONSTANTS = new PIDConstants(0, 0, 0);
   }
   public static final double gripTriggerDeadzone = 0.05;
 }

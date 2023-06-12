@@ -75,11 +75,11 @@ public class IntakeSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-public void runGripIn(double input){
+public void runGripIn(/*double input*/){
   IntakeMotor1.set(-0.25);
 }
-public void runGripOut(double input){
-  IntakeMotor1.set(1);
+public void runGripOut(/*double input*/){
+  IntakeMotor1.set(Constants.IntakeConstants.outakeSpeed);
 }
 public void stopGrip(){
   IntakeMotor1.set(0);

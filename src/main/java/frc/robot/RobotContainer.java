@@ -7,14 +7,17 @@ package frc.robot;
 import frc.robot.commands.DriveWithJoystickCommand;
 import frc.robot.commands.MoveArmCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.Autos;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MoveArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 //import frc.robot.subsystems.IntakeSubsystem;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -26,20 +29,26 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  //SendableChooser<Command> autonChooser = new SendableChooser<>();
   // The robot's subsystems and commands are defined here...
 
 
   public static CommandXboxController m_driverController = new CommandXboxController(0);
   //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final MoveArmSubsystem moveArmSubsystem = new MoveArmSubsystem();
-  private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+  public final static DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   private final DriveWithJoystickCommand DriveWithJoystickCommand = new DriveWithJoystickCommand(driveTrainSubsystem);
   private final MoveArmCommand MoveArmCommand = new MoveArmCommand(moveArmSubsystem, m_driverController);
   private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem, m_driverController);
 
- // public static Joystick joystick  = new Joystick(0);
+    /*private static final SendableChooser<CommandBase> autoChooser = new SendableChooser<>();
+
+    public static void init() {
+      autoChooser.setDefaultOption("Example Auto", Autos.exampleAuto());
+      autoChooser.addOption("None", Autos.none());
+    }*/
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -48,6 +57,8 @@ public class RobotContainer {
     configureBindings();
     driveTrainSubsystem.setDefaultCommand(DriveWithJoystickCommand);
     moveArmSubsystem.setDefaultCommand(MoveArmCommand);
+
+
   }
 
     /**
@@ -80,6 +91,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return DriveWithJoystickCommand;
+    //return autoChooser.getSelected();
   }
   
 }
