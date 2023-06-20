@@ -1,18 +1,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+//import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.Constants.*;
 
-public class IntakeCommand extends CommandBase {
+public class auto_IntakeCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   private IntakeSubsystem m_intakeSubsystem;
-  private CommandXboxController m_controller;
-  public IntakeCommand(IntakeSubsystem intakeSubsystem, CommandXboxController controller) {
-    this.m_controller = controller;
+  //private CommandXboxController m_controller;
+  private int amount;
+  public auto_IntakeCommand(IntakeSubsystem intakeSubsystem, int amount) {
     this.m_intakeSubsystem = intakeSubsystem;
+    this.amount = amount;
     addRequirements();
   } 
 
@@ -26,18 +27,17 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_controller.getRightTriggerAxis() > 0.05){
-      m_intakeSubsystem.runGripIn(/*m_controller.getRightTriggerAxis()*/);
-      
-    } else if(m_controller.getLeftTriggerAxis() > 0.05){
-      m_intakeSubsystem.runGripOut(/*m_controller.getLeftTriggerAxis()*/);
-    } else if(m_controller.leftBumper().getAsBoolean())
+    if(amount == -1)
     {
-      m_intakeSubsystem.runGripMax();
+      m_intakeSubsystem.runGripOut();
     }
-    else{
-      //m_gripSubsystem.setGripOut();
+    if(amount == 0)
+    {
       m_intakeSubsystem.stopGrip();
+    }
+    if(amount == 1)
+    {
+      m_intakeSubsystem.runGripIn();
     }
   }
   // Called once the command ends or is interrupted.
@@ -47,6 +47,6 @@ public class IntakeCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

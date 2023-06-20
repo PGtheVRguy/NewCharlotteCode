@@ -14,7 +14,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class IntakeSubsystem extends SubsystemBase {
-
+  public static double shootPower = 1.00;
   CANSparkMax IntakeMotor1 = new CANSparkMax(Constants.IntakeConstants.intakeMotor1ID, MotorType.kBrushed);
   CANSparkMax IntakeMotor2 = new CANSparkMax(Constants.IntakeConstants.intakeMotor2ID, MotorType.kBrushed);
   //RelativeEncoder IntakeEncoder = IntakeMotor1.getEncoder();
@@ -79,10 +79,13 @@ public void runGripIn(/*double input*/){
   IntakeMotor1.set(-0.25);
 }
 public void runGripOut(/*double input*/){
-  IntakeMotor1.set(Constants.IntakeConstants.outakeSpeed);
+  IntakeMotor1.set((Constants.IntakeConstants.outakeSpeed)*shootPower);
 }
 public void stopGrip(){
   IntakeMotor1.set(0);
+}
+public void runGripMax(){
+  IntakeMotor1.set(Constants.IntakeConstants.outakeSpeed);
 }
 //public double getGripPos(){
 //  return IntakeMotor1.getEncoder().getPosition();

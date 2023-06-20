@@ -1,18 +1,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+//import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import frc.robot.RobotContainer;
 import frc.robot.subsystems.MoveArmSubsystem;
 
 
-public class MoveArmCommand extends CommandBase {
+public class auto_MoveArmCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final MoveArmSubsystem moveArmSubsystem;
-
-  private final CommandXboxController m_controller;
-  public MoveArmCommand(MoveArmSubsystem moveArmSubsystem, CommandXboxController controller) {
-    this.m_controller = controller;
+  private int position;
+  public auto_MoveArmCommand(MoveArmSubsystem moveArmSubsystem, int position) {
+    this.position = position;
     this.moveArmSubsystem = moveArmSubsystem;
     addRequirements(moveArmSubsystem);
   }
@@ -26,7 +25,7 @@ public class MoveArmCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+/* 
     if(m_controller.povDown().getAsBoolean())
     {
       moveArmSubsystem.armDown();
@@ -38,24 +37,27 @@ public class MoveArmCommand extends CommandBase {
     else{
       moveArmSubsystem.forceStopArm();
     }
-    if(m_controller.button(4).getAsBoolean()) //======THIS THING======//
+*/
+
+//======THIS THING======//
+    if(position == 2) 
     {
       moveArmSubsystem.armHigh();
     }
-    if(m_controller.button(3).getAsBoolean())
+    if(position == 1)
     {
       moveArmSubsystem.armMid();
     }
-    if(m_controller.button(1).getAsBoolean())
+    if(position == 0)
     {
       moveArmSubsystem.armLow();
     }
 
-    if(m_controller.button(2).getAsBoolean())
+    if(position == 3)
     {
       moveArmSubsystem.forceStopArm();
     }
-    if(m_controller.button(7).getAsBoolean())
+    if(position == 4)
     {
       moveArmSubsystem.zeroArm();
     }
@@ -68,6 +70,6 @@ public class MoveArmCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

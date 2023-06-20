@@ -4,26 +4,27 @@
 
 package frc.robot.commands;
 
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
-
-import javax.lang.model.util.ElementScanner14;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /** An example command that uses an example subsystem. */
-public class DriveWithJoystickCommand extends CommandBase {
+public class auto_DriveWithJoystickCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveTrainSubsystem driveTrainSubsystem;
+  private double amount;
+  private double time;
+  private double timer;
   //private double timeWhilePressed = 0.00;
   /**
    * Creates a new ExampleCommand.
    *
    *. @param subsystem The subsystem used by this command.
    */
-  public DriveWithJoystickCommand(DriveTrainSubsystem driveTrainSubsystem) {
+  public auto_DriveWithJoystickCommand(DriveTrainSubsystem driveTrainSubsystem, double amount, double time) {
     this.driveTrainSubsystem = driveTrainSubsystem;
+    this.amount = amount;
+    this.time = time;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrainSubsystem);
     
@@ -39,21 +40,18 @@ public class DriveWithJoystickCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*if((RobotContainer.m_driverController.getLeftY() != 0))
+    driveTrainSubsystem.arcadeDrive(-amount, 0.01);
+    if((time/0.2) > timer)
     {
-      if(timeWhilePressed != 1)
-      {
-        timeWhilePressed += 0.05;
-      }
-    }
+      SmartDashboard.putNumber("autonDriverTimer", timer);
+      System.out.println(timer);
+      timer += 0.2;
+      driveTrainSubsystem.arcadeDrive(-amount, 0.01);
+  
+    } 
     else{
-      timeWhilePressed = 0;
-    }*/
-    //THAT STUFF ADDED THAT REALLY COOL TURBO BUTTON!!!
-    
-    double forwardSpeed = RobotContainer.deadband(RobotContainer.m_driverController.getLeftY(),0.1);//*timeWhilePressed;
-    double turningSpeed = RobotContainer.m_driverController.getRightX()/2;
-    driveTrainSubsystem.arcadeDrive(-forwardSpeed, -turningSpeed);
+      driveTrainSubsystem.arcadeDrive(0, 0.01);
+    }
   }
 
   // Called once the command ends or is interrupted.

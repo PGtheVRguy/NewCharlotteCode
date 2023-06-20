@@ -6,18 +6,22 @@ package frc.robot;
 
 import frc.robot.commands.DriveWithJoystickCommand;
 import frc.robot.commands.MoveArmCommand;
+import frc.robot.commands.auto_DriveWithJoystickCommand;
+import frc.robot.commands.auto_IntakeCommand;
+import frc.robot.commands.auto_MoveArmCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.Autos;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MoveArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 //import frc.robot.subsystems.IntakeSubsystem;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -42,7 +46,7 @@ public class RobotContainer {
   private final DriveWithJoystickCommand DriveWithJoystickCommand = new DriveWithJoystickCommand(driveTrainSubsystem);
   private final MoveArmCommand MoveArmCommand = new MoveArmCommand(moveArmSubsystem, m_driverController);
   private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem, m_driverController);
-
+  public double autonTime = 0;
     /*private static final SendableChooser<CommandBase> autoChooser = new SendableChooser<>();
 
     public static void init() {
@@ -71,27 +75,73 @@ public class RobotContainer {
      * joysticks}.
      */
   private void configureBindings() {
-    new Trigger(m_driverController.button(1)).onTrue(MoveArmCommand);
-    new Trigger(m_driverController.button(2)).onTrue(MoveArmCommand);
-    new Trigger(m_driverController.button(4)).onTrue(MoveArmCommand);
+    new Trigger(m_driverController.button(1)).toggleOnTrue(MoveArmCommand); //Low
+    new Trigger(m_driverController.button(2)).toggleOnTrue(MoveArmCommand); //Force stop?
+    new Trigger(m_driverController.button(4)).toggleOnTrue(MoveArmCommand); //High
+    new Trigger(m_driverController.button(7)).toggleOnTrue(MoveArmCommand); //Zero
+    
+
+    new Trigger(m_driverController.povDown()).onTrue(MoveArmCommand);
+    new Trigger(m_driverController.povUp()).onTrue(MoveArmCommand);
 
     new Trigger(m_driverController.rightTrigger(0.1))
       .onTrue(intakeCommand);
       new Trigger(m_driverController.leftTrigger(0.1))
       .onTrue(intakeCommand);
+      new Trigger(m_driverController.button(5)).toggleOnTrue(intakeCommand); //Intake MAX
       //new Trigger(m_driverController.pov(180)).onTrue(intakeCommand);
   }
-  
-  
+
+    
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return DriveWithJoystickCommand;
-    //return autoChooser.getSelected();
+
+   public static double deadband(double value, double deadband) {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
   }
-  
+
+  public static boolean between(double valueLeast, double valueMost, double value) {
+    if ((value > valueLeast) && (value < valueMost))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  public Command getAutonomousCommand() {
+    //return DriveWithJoystickCommand;
+    System.out.println("Starting auto stuff");
+    
+    autonTime += 0.1;
+    return new SequentialCommandGroup(
+      new auto_IntakeCommand(intakeSubsystem, -1),
+      new WaitCommand(1),
+      new auto_IntakeCommand(intakeSubsystem, 0),
+      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.5,6),
+      new WaitCommand(6),
+      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0,0),
+      new SequentialCommandGroup(
+        new auto_MoveArmCommand(moveArmSubsystem, 0)
+      )
+    //holy crap, auton :)
+    );
+
+  }
 }
+
+

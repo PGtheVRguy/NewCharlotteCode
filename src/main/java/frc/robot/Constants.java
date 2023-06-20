@@ -34,6 +34,9 @@ public final class Constants {
   }
   public static final class MoveArmConstants{
     public static final int ArmMotorID = 51;
+    public static final double armkP = 0.03;
+    public static final double armkI = 0.00;
+    public static final double armkD = 0.00;
   }
   public static final class AutonStuff{
     public static final PIDConstants AUTO_TRANSLATION_CONSTANTS = new PIDConstants(0, 0, 0);
