@@ -50,7 +50,10 @@ public class auto_MoveArmCommand extends CommandBase {
     }
     if(position == 0)
     {
-      moveArmSubsystem.armLow();
+     // if(armPID.getEncoder > 269);
+     // {
+       moveArmSubsystem.armLow();
+     // }
     }
 
     if(position == 3)
@@ -70,6 +73,6 @@ public class auto_MoveArmCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

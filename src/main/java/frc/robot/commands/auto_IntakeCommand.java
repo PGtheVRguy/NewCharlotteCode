@@ -29,10 +29,12 @@ public class auto_IntakeCommand extends CommandBase {
   public void execute() {
     if(amount == -1)
     {
+      IntakeSubsystem.shootPower = 1.2;
       m_intakeSubsystem.runGripOut();
     }
     if(amount == 0)
     {
+      IntakeSubsystem.shootPower = 1;
       m_intakeSubsystem.stopGrip();
     }
     if(amount == 1)

@@ -15,16 +15,18 @@ public class auto_DriveWithJoystickCommand extends CommandBase {
   private double amount;
   private double time;
   private double timer;
+  private double setRot;
   //private double timeWhilePressed = 0.00;
   /**
    * Creates a new ExampleCommand.
    *
    *. @param subsystem The subsystem used by this command.
    */
-  public auto_DriveWithJoystickCommand(DriveTrainSubsystem driveTrainSubsystem, double amount, double time) {
+  public auto_DriveWithJoystickCommand(DriveTrainSubsystem driveTrainSubsystem, double amount, double time, double setRot) {
     this.driveTrainSubsystem = driveTrainSubsystem;
     this.amount = amount;
     this.time = time;
+    this.setRot = setRot;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrainSubsystem);
     
@@ -40,7 +42,7 @@ public class auto_DriveWithJoystickCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrainSubsystem.arcadeDrive(-amount, 0.01);
+    driveTrainSubsystem.arcadeDrive(-amount, setRot);
     if((time/0.2) > timer)
     {
       SmartDashboard.putNumber("autonDriverTimer", timer);

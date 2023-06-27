@@ -31,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
     IntakeMotor1.restoreFactoryDefaults();
     IntakeMotor2.restoreFactoryDefaults();
     
-    IntakeMotor2.follow(IntakeMotor1);
+    //IntakeMotor2.follow(IntakeMotor1);
 
 
 
@@ -77,15 +77,19 @@ public class IntakeSubsystem extends SubsystemBase {
 
 public void runGripIn(/*double input*/){
   IntakeMotor1.set(-0.25);
+  IntakeMotor2.set(-0.25);
 }
 public void runGripOut(/*double input*/){
   IntakeMotor1.set((Constants.IntakeConstants.outakeSpeed)*shootPower);
+  IntakeMotor2.set((Constants.IntakeConstants.outakeSpeed)*shootPower*0.9);
 }
 public void stopGrip(){
   IntakeMotor1.set(0);
+  IntakeMotor2.set(0);
 }
 public void runGripMax(){
   IntakeMotor1.set(Constants.IntakeConstants.outakeSpeed);
+  IntakeMotor2.set(Constants.IntakeConstants.outakeSpeed);
 }
 //public double getGripPos(){
 //  return IntakeMotor1.getEncoder().getPosition();

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /** An example command that uses an example subsystem. */
 public class DriveWithJoystickCommand extends CommandBase {
+  double moveSpeed = 1;
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveTrainSubsystem driveTrainSubsystem;
   //private double timeWhilePressed = 0.00;
@@ -39,6 +40,7 @@ public class DriveWithJoystickCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
     /*if((RobotContainer.m_driverController.getLeftY() != 0))
     {
       if(timeWhilePressed != 1)
@@ -49,11 +51,18 @@ public class DriveWithJoystickCommand extends CommandBase {
     else{
       timeWhilePressed = 0;
     }*/
+    if(RobotContainer.m_driverController.rightBumper().getAsBoolean())
+    {
+      moveSpeed = 1;
+    }
+    else{
+      moveSpeed = 0.6;
+    }
     //THAT STUFF ADDED THAT REALLY COOL TURBO BUTTON!!!
-    
     double forwardSpeed = RobotContainer.deadband(RobotContainer.m_driverController.getLeftY(),0.1);//*timeWhilePressed;
     double turningSpeed = RobotContainer.m_driverController.getRightX()/2;
-    driveTrainSubsystem.arcadeDrive(-forwardSpeed, -turningSpeed);
+    driveTrainSubsystem.arcadeDrive(-forwardSpeed*moveSpeed, -turningSpeed);
+
   }
 
   // Called once the command ends or is interrupted.

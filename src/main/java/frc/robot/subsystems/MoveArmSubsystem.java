@@ -85,7 +85,7 @@ public class MoveArmSubsystem extends SubsystemBase {
 
   //cool stuff that tells the arm to go to preset pos.
   public void armHigh() {
-    IntakeSubsystem.shootPower = 1;
+    IntakeSubsystem.shootPower = 1.2;
     armPID.setReference(0, ControlType.kPosition);
   }
   public void armMid() {
@@ -94,7 +94,7 @@ public class MoveArmSubsystem extends SubsystemBase {
   }
   public void armLow() {
     IntakeSubsystem.shootPower = 0.5;
-    armPID.setReference(269, ControlType.kPosition);
+    armPID.setReference(269, ControlType.kPosition); //the set reference values are all preset to cool stuff, PLEASE SET CAREFULLY!
   }
 
 

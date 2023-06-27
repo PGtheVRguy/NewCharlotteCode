@@ -132,12 +132,13 @@ public class RobotContainer {
       new auto_IntakeCommand(intakeSubsystem, -1),
       new WaitCommand(1),
       new auto_IntakeCommand(intakeSubsystem, 0),
-      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.5,6),
-      new WaitCommand(6),
-      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0,0),
+      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.5,7.5, 0.01),
+      //new WaitCommand(6.685), //FYI to future me, if you are doing auton, and your thingy does weird stops and stutters, round your seconds to tenths. It works :)
+      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.01,3,1),
       new SequentialCommandGroup(
-        new auto_MoveArmCommand(moveArmSubsystem, 0)
+      new auto_MoveArmCommand(moveArmSubsystem, 0)
       )
+      
     //holy crap, auton :)
     );
 
