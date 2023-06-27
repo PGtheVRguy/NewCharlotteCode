@@ -27,7 +27,7 @@ public class MoveArmSubsystem extends SubsystemBase {
   CANSparkMax armMotor = new CANSparkMax(MoveArmConstants.ArmMotorID, MotorType.kBrushless); //sets up Arm motor
   private SparkMaxPIDController armPID;
   
-  RelativeEncoder armEncoder = armMotor.getEncoder(); //sets armEncoder to the motors encoder
+  public RelativeEncoder armEncoder = armMotor.getEncoder(); //sets armEncoder to the motors encoder
 
   private double newArmkP = MoveArmConstants.armkP;
   private double newArmkI = MoveArmConstants.armkI;

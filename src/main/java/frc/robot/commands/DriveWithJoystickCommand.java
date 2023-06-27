@@ -53,10 +53,10 @@ public class DriveWithJoystickCommand extends CommandBase {
     }*/
     if(RobotContainer.m_driverController.rightBumper().getAsBoolean())
     {
-      moveSpeed = 1;
+      moveSpeed = 0.5;
     }
     else{
-      moveSpeed = 0.6;
+      moveSpeed = 1;
     }
     //THAT STUFF ADDED THAT REALLY COOL TURBO BUTTON!!!
     double forwardSpeed = RobotContainer.deadband(RobotContainer.m_driverController.getLeftY(),0.1);//*timeWhilePressed;

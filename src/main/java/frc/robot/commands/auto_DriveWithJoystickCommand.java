@@ -12,21 +12,21 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class auto_DriveWithJoystickCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveTrainSubsystem driveTrainSubsystem;
-  private double amount;
+  private double fwdAmount;
   private double time;
   private double timer;
-  private double setRot;
+  private double rotAmount;
   //private double timeWhilePressed = 0.00;
   /**
    * Creates a new ExampleCommand.
    *
    *. @param subsystem The subsystem used by this command.
    */
-  public auto_DriveWithJoystickCommand(DriveTrainSubsystem driveTrainSubsystem, double amount, double time, double setRot) {
+  public auto_DriveWithJoystickCommand(DriveTrainSubsystem driveTrainSubsystem, double fwdAmount, double time, double rotAmount) {
     this.driveTrainSubsystem = driveTrainSubsystem;
-    this.amount = amount;
+    this.fwdAmount = fwdAmount;
     this.time = time;
-    this.setRot = setRot;
+    this.rotAmount = rotAmount;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrainSubsystem);
     
@@ -42,17 +42,17 @@ public class auto_DriveWithJoystickCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrainSubsystem.arcadeDrive(-amount, setRot);
+    driveTrainSubsystem.arcadeDrive(-fwdAmount, rotAmount);
     if((time/0.2) > timer)
     {
       SmartDashboard.putNumber("autonDriverTimer", timer);
       System.out.println(timer);
       timer += 0.2;
-      driveTrainSubsystem.arcadeDrive(-amount, 0.01);
+      driveTrainSubsystem.arcadeDrive(-fwdAmount, rotAmount);
   
     } 
     else{
-      driveTrainSubsystem.arcadeDrive(0, 0.01);
+      driveTrainSubsystem.arcadeDrive(0, 0);
     }
   }
 

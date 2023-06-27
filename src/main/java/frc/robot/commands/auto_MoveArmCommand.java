@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 //import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import frc.robot.RobotContainer;
@@ -25,44 +26,16 @@ public class auto_MoveArmCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-/* 
-    if(m_controller.povDown().getAsBoolean())
-    {
-      moveArmSubsystem.armDown();
-    }
-      else if(m_controller.povUp().getAsBoolean())
-      {
-        moveArmSubsystem.armUp();
-      }
-    else{
-      moveArmSubsystem.forceStopArm();
-    }
-*/
-
+    SmartDashboard.putNumber("autonArmEncoder", moveArmSubsystem.armEncoder.getPosition());
 //======THIS THING======//
-    if(position == 2) 
-    {
-      moveArmSubsystem.armHigh();
-    }
-    if(position == 1)
-    {
-      moveArmSubsystem.armMid();
-    }
-    if(position == 0)
-    {
-     // if(armPID.getEncoder > 269);
-     // {
-       moveArmSubsystem.armLow();
-     // }
-    }
 
-    if(position == 3)
+    if(moveArmSubsystem.armEncoder.getPosition() > 269);
     {
-      moveArmSubsystem.forceStopArm();
+      moveArmSubsystem.armLow();
     }
-    if(position == 4)
+    if(moveArmSubsystem.armEncoder.getPosition() < 269);
     {
-      moveArmSubsystem.zeroArm();
+      isFinished();
     }
   }
 

@@ -27,10 +27,10 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     if(m_controller.getRightTriggerAxis() > 0.05){
-      m_intakeSubsystem.runGripIn(/*m_controller.getRightTriggerAxis()*/);
+      m_intakeSubsystem.runGripOut(/*m_controller.getRightTriggerAxis()*/);
       
     } else if(m_controller.getLeftTriggerAxis() > 0.05){
-      m_intakeSubsystem.runGripOut(/*m_controller.getLeftTriggerAxis()*/);
+      m_intakeSubsystem.runGripIn(/*m_controller.getLeftTriggerAxis()*/);
     } else if(m_controller.leftBumper().getAsBoolean())
     {
       m_intakeSubsystem.runGripMax();
