@@ -46,7 +46,7 @@ public class auto_DriveWithJoystickCommand extends CommandBase {
     if((time/0.2) > timer)
     {
       SmartDashboard.putNumber("autonDriverTimer", timer);
-      System.out.println(timer);
+      //System.out.println(timer);
       timer += 0.2;
       driveTrainSubsystem.arcadeDrive(-fwdAmount, rotAmount);
   

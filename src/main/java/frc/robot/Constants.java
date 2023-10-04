@@ -25,7 +25,7 @@ public final class Constants {
     public static final int rightMotor1ID = 21;
     public static final int rightMotor2ID = 22;
     public static final int rightMotor3ID = 23;
-    public static final int maxVoltage = 8; //If issues arise from recent upgrade, blame this.
+    public static final int maxVoltage = 4; //If issues arise from recent upgrade, blame this.
   }
   public static final class IntakeConstants{
     public static final int intakeMotor1ID = 41;

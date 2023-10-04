@@ -28,35 +28,31 @@ public class MoveArmSubsystem extends SubsystemBase {
   private SparkMaxPIDController armPID;
   
   public RelativeEncoder armEncoder = armMotor.getEncoder(); //sets armEncoder to the motors encoder
-
-  private double newArmkP = MoveArmConstants.armkP;
-  private double newArmkI = MoveArmConstants.armkI;
-  private double newArmkD = MoveArmConstants.armkD;
   private boolean startMovingLow = false;
   private boolean startMovingMid = false;
   private boolean startMovingHigh = false;
+
+  private PIDController PID;
 
 
   public MoveArmSubsystem() {
     armPID = armMotor.getPIDController();
     armMotor.restoreFactoryDefaults(); //i dunno was told to do dis 
+    armEncoder.setPosition(0); //Sets the current position of the arm to "0".
 
-    armEncoder.setPosition(0); //I dunno I'll figure that out.
-    armPID.setP(newArmkP);
-    armPID.setI(newArmkI);
-    armPID.setD(newArmkD);
-    armPID.setSmartMotionAllowedClosedLoopError(1, 0);
+    PID = new PIDController(0, 0, 0);
+    PID.setTolerance(5);
+    PID.setSetpoint(0);
     
+
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    System.out.println(armEncoder.getPosition());
+    //System.out.println(armEncoder.getPosition());
     SmartDashboard.putNumber("Arm Pos", armEncoder.getPosition());
-    SmartDashboard.putNumber("Arm P", armPID.getP());
-    SmartDashboard.putNumber("Arm I", armPID.getI());
-    SmartDashboard.putNumber("Arm D", armPID.getD());
+
     /*if(startMovingMid = true){
       armPID.setReference(91, ControlType.kPosition);
       if(RobotContainer.between(90, 91, armEncoder.getPosition())) 
@@ -92,6 +88,7 @@ public class MoveArmSubsystem extends SubsystemBase {
     IntakeSubsystem.shootPower = 0.6;
     armPID.setReference(91, ControlType.kPosition);
   }
+
   public void armLow() {
     IntakeSubsystem.shootPower = 0.5;
     armPID.setReference(269, ControlType.kPosition); //the set reference values are all preset to cool stuff, PLEASE SET CAREFULLY!

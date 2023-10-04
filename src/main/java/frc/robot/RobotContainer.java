@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -75,10 +76,14 @@ public class RobotContainer {
      * joysticks}.
      */
   private void configureBindings() {
-    new Trigger(m_driverController.button(1)).toggleOnTrue(MoveArmCommand); //Low
-    new Trigger(m_driverController.button(2)).toggleOnTrue(MoveArmCommand); //Force stop?
-    new Trigger(m_driverController.button(4)).toggleOnTrue(MoveArmCommand); //High
-    new Trigger(m_driverController.button(7)).toggleOnTrue(MoveArmCommand); //Zero
+    new Trigger(m_driverController.button(1))
+    .onTrue(MoveArmCommand); //Low
+    new Trigger(m_driverController.button(2))
+    .onTrue(MoveArmCommand); //Force stop?
+    new Trigger(m_driverController.button(4))
+    .onTrue(MoveArmCommand); //High
+    new Trigger(m_driverController.button(7))
+    .onTrue(MoveArmCommand); //Zero
     
 
     new Trigger(m_driverController.povDown()).onTrue(MoveArmCommand);
@@ -132,10 +137,10 @@ public class RobotContainer {
       new auto_IntakeCommand(intakeSubsystem, -1),
       new WaitCommand(1),
       new auto_IntakeCommand(intakeSubsystem, 0),
-      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.5,7.5, 0.0),
+      new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.5,7.5, 0),
       //new WaitCommand(6.685), //FYI to future me, if you are doing auton, and your thingy does weird stops and stutters, round your seconds to tenths. It works :)
-      new auto_MoveArmCommand(moveArmSubsystem, 0)
-      //new WaitCommand(3),
+      new auto_MoveArmCommand(moveArmSubsystem, 0),
+      new WaitCommand(3)
       //new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.25,3,1),
       //new WaitCommand(3),
       //new auto_DriveWithJoystickCommand(driveTrainSubsystem,0.001,0.001,1)
