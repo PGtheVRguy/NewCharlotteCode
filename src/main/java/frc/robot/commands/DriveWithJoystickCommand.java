@@ -59,7 +59,7 @@ public class DriveWithJoystickCommand extends CommandBase {
       moveSpeed = 1;
     }
     //THAT STUFF ADDED THAT REALLY COOL TURBO BUTTON!!!
-    double forwardSpeed = RobotContainer.deadband(RobotContainer.m_driverController.getLeftY(),0.1);//*timeWhilePressed;
+    double forwardSpeed = RobotContainer.deadband(RobotContainer.m_driverController.getLeftY(),0.1);
     double turningSpeed = RobotContainer.m_driverController.getRightX()/2;
     driveTrainSubsystem.arcadeDrive(-forwardSpeed*moveSpeed, -turningSpeed);
 

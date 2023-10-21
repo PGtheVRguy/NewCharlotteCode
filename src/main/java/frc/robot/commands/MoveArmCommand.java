@@ -26,29 +26,35 @@ public class MoveArmCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    //Manual mode!
     if(m_controller.povDown().getAsBoolean())
     {
-      moveArmSubsystem.armDown();
+      moveArmSubsystem.moveArm(0.5);
     }
       else if(m_controller.povUp().getAsBoolean())
       {
-        moveArmSubsystem.armUp();
+        moveArmSubsystem.moveArm(-0.5);
       }
     else{
       moveArmSubsystem.forceStopArm();
     }
+
+
+    //auto mode
     if(m_controller.button(4).getAsBoolean()) //======THIS THING======//
     {
-      moveArmSubsystem.armHigh();
+      moveArmSubsystem.armSetPID(0,1.2);
+      //moveArmSubsystem.armHigh();
     }
     if(m_controller.button(3).getAsBoolean())
     {
-      moveArmSubsystem.armMid();
+      moveArmSubsystem.armSetPID(91,0.6);
+      //moveArmSubsystem.armMid();
     }
     if(m_controller.button(1).getAsBoolean())
     {
-      moveArmSubsystem.armLow();
+      moveArmSubsystem.armSetPID(269,0.5);
+      //moveArmSubsystem.armLow();
     }
 
     if(m_controller.button(2).getAsBoolean())

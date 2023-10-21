@@ -2,17 +2,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.Constants.*;
 
 public class IntakeCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-
+  public static double shootPower = 0.00;
   private IntakeSubsystem m_intakeSubsystem;
   private CommandXboxController m_controller;
   public IntakeCommand(IntakeSubsystem intakeSubsystem, CommandXboxController controller) {
     this.m_controller = controller;
     this.m_intakeSubsystem = intakeSubsystem;
+    
     addRequirements();
   } 
 
@@ -26,18 +28,18 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_controller.getRightTriggerAxis() > 0.05){
-      m_intakeSubsystem.runGripOut(/*m_controller.getRightTriggerAxis()*/);
+    if(m_controller.getRightTriggerAxis() > 0.05){ //if right trigger > 0.05
+      m_intakeSubsystem.runGripSpeed((Constants.IntakeConstants.outakeSpeed)*shootPower); //set max outtake
       
     } else if(m_controller.getLeftTriggerAxis() > 0.05){
-      m_intakeSubsystem.runGripIn(/*m_controller.getLeftTriggerAxis()*/);
+      m_intakeSubsystem.runGripSpeed(-0.25);
     } else if(m_controller.leftBumper().getAsBoolean())
     {
-      m_intakeSubsystem.runGripMax();
+      m_intakeSubsystem.runGripSpeed(Constants.IntakeConstants.outakeSpeed); //max speed
     }
     else{
       //m_gripSubsystem.setGripOut();
-      m_intakeSubsystem.stopGrip();
+      m_intakeSubsystem.runGripSpeed(0);
     }
   }
   // Called once the command ends or is interrupted.

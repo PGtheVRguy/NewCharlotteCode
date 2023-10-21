@@ -1,6 +1,7 @@
-package frc.robot.commands;
+package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.IntakeCommand;
 //import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.Constants.*;
@@ -29,17 +30,17 @@ public class auto_IntakeCommand extends CommandBase {
   public void execute() {
     if(amount == -1)
     {
-      IntakeSubsystem.shootPower = 1.2;
-      m_intakeSubsystem.runGripOut();
+      IntakeCommand.shootPower = 1.2;
+    //  m_intakeSubsystem.runGripOut();
     }
     if(amount == 0)
     {
-      IntakeSubsystem.shootPower = 1;
-      m_intakeSubsystem.stopGrip();
+      IntakeCommand.shootPower = 1;
+     // m_intakeSubsystem.stopGrip();
     }
     if(amount == 1)
     {
-      m_intakeSubsystem.runGripIn();
+    //  m_intakeSubsystem.runGripIn();
     }
   }
   // Called once the command ends or is interrupted.

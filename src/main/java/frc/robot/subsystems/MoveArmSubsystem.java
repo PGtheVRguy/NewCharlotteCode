@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax.ControlType;
 //import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.Encoder;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.*;
+import frc.robot.commands.IntakeCommand;
 
 
 
@@ -28,9 +30,6 @@ public class MoveArmSubsystem extends SubsystemBase {
   private SparkMaxPIDController armPID;
   
   public RelativeEncoder armEncoder = armMotor.getEncoder(); //sets armEncoder to the motors encoder
-  private boolean startMovingLow = false;
-  private boolean startMovingMid = false;
-  private boolean startMovingHigh = false;
 
   private PIDController PID;
 
@@ -40,7 +39,7 @@ public class MoveArmSubsystem extends SubsystemBase {
     armMotor.restoreFactoryDefaults(); //i dunno was told to do dis 
     armEncoder.setPosition(0); //Sets the current position of the arm to "0".
 
-    PID = new PIDController(0, 0, 0);
+    PID = new PIDController(MoveArmConstants.armkP, MoveArmConstants.armkI, MoveArmConstants.armkD);
     PID.setTolerance(5);
     PID.setSetpoint(0);
     
@@ -81,19 +80,34 @@ public class MoveArmSubsystem extends SubsystemBase {
 
   //cool stuff that tells the arm to go to preset pos.
   public void armHigh() {
-    IntakeSubsystem.shootPower = 1.2;
+    IntakeCommand.shootPower = 1.2;
     armPID.setReference(0, ControlType.kPosition);
   }
+
   public void armMid() {
-    IntakeSubsystem.shootPower = 0.6;
+    IntakeCommand.shootPower = 0.6;
     armPID.setReference(91, ControlType.kPosition);
   }
 
   public void armLow() {
-    IntakeSubsystem.shootPower = 0.5;
+    IntakeCommand.shootPower = 0.5;
     armPID.setReference(269, ControlType.kPosition); //the set reference values are all preset to cool stuff, PLEASE SET CAREFULLY!
   }
 
+  public void armSetPID(int ref, double power) {
+    armPID.setReference(power, ControlType.kPosition);
+    IntakeCommand.shootPower = ref;
+  }
+
+  public void moveArm(double val) {
+    double currentArmPos = armMotor.get();
+
+    double targetAngleClamped = MathUtil.clamp(val, 0, 269); //the clamped positions
+    double targetAnglePID = MathUtil.clamp(PID.calculate(currentArmPos, targetAngleClamped), -MoveArmConstants.maxPIDArmSpeed,MoveArmConstants.maxPIDArmSpeed);
+    armMotor.set(targetAnglePID); 
+    
+    //PID mostly stolen from TitaniumTitans 2023 code, thanks Rowan :3
+  }
 
   @Override
   public void simulationPeriodic() {

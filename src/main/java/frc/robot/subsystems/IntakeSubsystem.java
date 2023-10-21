@@ -14,7 +14,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class IntakeSubsystem extends SubsystemBase {
-  public static double shootPower = 1.00;
   CANSparkMax IntakeMotor1 = new CANSparkMax(Constants.IntakeConstants.intakeMotor1ID, MotorType.kBrushed);
   CANSparkMax IntakeMotor2 = new CANSparkMax(Constants.IntakeConstants.intakeMotor2ID, MotorType.kBrushed);
   //RelativeEncoder IntakeEncoder = IntakeMotor1.getEncoder();
@@ -30,23 +29,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
     IntakeMotor1.restoreFactoryDefaults();
     IntakeMotor2.restoreFactoryDefaults();
-    
-    //IntakeMotor2.follow(IntakeMotor1);
-
-
-
-    //IntakeEncoder1.setPosition(0);
-    //IntakeEncoder2.setPosition(0);
-
     IntakeControllerGroup.setInverted(false);
-    //leftControllerGroup.setInverted(false);
   }
-
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
   public CommandBase exampleMethodCommand() {
 
     return runOnce(
@@ -55,55 +39,20 @@ public class IntakeSubsystem extends SubsystemBase {
         });
   }
 
-  /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
-   *
-   * @return value of some boolean subsystem state, such as a digital sensor.
-   */
   public boolean exampleCondition() {
-    // Query some boolean state, such as a digital sensor.
     return false;
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 
   @Override
   public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
   }
 
-
-
-  public void runGripSpeed(float speed){
+  public void runGripSpeed(double speed){
     IntakeMotor1.set(speed);
     IntakeMotor2.set(speed);
   }
-
-
-public void runGripIn(/*double input*/){
-  IntakeMotor1.set(-0.25);
-  IntakeMotor2.set(-0.25);
-}
-public void runGripOut(/*double input*/){
-  IntakeMotor1.set((Constants.IntakeConstants.outakeSpeed)*shootPower);
-  IntakeMotor2.set((Constants.IntakeConstants.outakeSpeed)*shootPower*0.9);
-}
-public void stopGrip(){
-  IntakeMotor1.set(0);
-  IntakeMotor2.set(0);
-}
-public void runGripMax(){
-  IntakeMotor1.set(Constants.IntakeConstants.outakeSpeed);
-  IntakeMotor2.set(Constants.IntakeConstants.outakeSpeed);
-}
-//public double getGripPos(){
-//  return IntakeMotor1.getEncoder().getPosition();
-//}
-
-  //public void arcadeDrive(double fwd, double rot) {
-  //  differentialDrive.arcadeDrive(fwd, rot);
-  //}
 }
