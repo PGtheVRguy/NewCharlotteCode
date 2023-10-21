@@ -113,6 +113,7 @@ public class RobotContainer {
     
     autonTime += 0.1;
     return new SequentialCommandGroup( //(estimated) 95% chance these autos do not work!
+      new auto_MoveArmCommand(moveArmSubsystem, 0),
       new auto_IntakeCommand(intakeSubsystem, -1),
       new WaitCommand(1),
       new auto_IntakeCommand(intakeSubsystem, 0),
@@ -121,6 +122,7 @@ public class RobotContainer {
       new auto_MoveArmCommand(moveArmSubsystem, 0),
       new WaitCommand(3)
     //holy crap, auton :)
+    
     );
 
   }

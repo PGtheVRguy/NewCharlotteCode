@@ -1,4 +1,9 @@
 {
+  "Keyboard 0 Settings": {
+    "window": {
+      "visible": true
+    }
+  },
   "keyboardJoysticks": [
     {
       "axisConfig": [
@@ -88,5 +93,6 @@
       "buttonCount": 0,
       "povCount": 0
     }
-  ]
+  ],
+  "useEnableDisableHotkeys": true
 }

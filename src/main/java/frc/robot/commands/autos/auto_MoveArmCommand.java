@@ -31,7 +31,8 @@ public class auto_MoveArmCommand extends CommandBase {
 
     if(moveArmSubsystem.armEncoder.getPosition() > 269);
     {
-      moveArmSubsystem.armLow();
+      moveArmSubsystem.armSetPID(269,0.5);
+      //moveArmSubsystem.armLow();
     }
     if(moveArmSubsystem.armEncoder.getPosition() < 269);
     {
