@@ -27,6 +27,7 @@ public class MoveArmCommand extends CommandBase {
   @Override
   public void execute() {
     //Manual mode!
+     
     if(m_controller.povDown().getAsBoolean())
     {
       moveArmSubsystem.moveArm(0.5);
@@ -35,13 +36,10 @@ public class MoveArmCommand extends CommandBase {
       {
         moveArmSubsystem.moveArm(-0.5);
       }
-    else{
-      moveArmSubsystem.forceStopArm();
-    }
-
+    
 
     //auto mode
-    if(m_controller.button(4).getAsBoolean()) //======THIS THING======//
+    if(m_controller.button(4).getAsBoolean()) //======PID======//
     {
       moveArmSubsystem.armSetPID(0,1.2); //HIGH
       //moveArmSubsystem.armHigh();

@@ -34,9 +34,9 @@ public final class Constants {
   }
   public static final class MoveArmConstants{
     public static final int ArmMotorID = 51;
-    public static final double armkP = 0.07; // speed
-    public static final double armkI = 0.01; // error
-    public static final double armkD = 0.01; // break
+    public static final double armkP = 0.01; // speed
+    public static final double armkI = 0.03; // error
+    public static final double armkD = 0.02; // break
     public static final int minArmPos = 0;
     public static final int maxArmPos = 269;
     public static final double maxPIDArmSpeed = 0.7;
