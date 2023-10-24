@@ -6,8 +6,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
 //import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -17,8 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.*;
 import frc.robot.commands.IntakeCommand;
 
@@ -37,7 +33,7 @@ public class MoveArmSubsystem extends SubsystemBase {
 
     PID = new PIDController(MoveArmConstants.armkP, MoveArmConstants.armkI, MoveArmConstants.armkD);
     PID.setTolerance(5);
-    PID.setSetpoint(0);
+    //PID.setSetpoint(0);
     
 
   }
@@ -55,17 +51,17 @@ public class MoveArmSubsystem extends SubsystemBase {
   }
   public void armUp() {
     armMotor.set(-0.5); //tells the motor "ayo start moving up"
-   }
+  }
   public void forceStopArm() {
     armMotor.set(0);
   }
 
   public void armSetPID(int ref, double power) { //gets the chosen reference destination and intake power for the arm and throws the ref des into a PID
-    double currentArmPos = armMotor.get();
+    double currentArmPos = armEncoder.getPosition();
 
-    double targetAngleClamped = MathUtil.clamp(ref, 0, 269); //the clamped positions
+    double targetAngleClamped = MathUtil.clamp(ref, 5, 240); //the clamped positions
     double targetAnglePID = MathUtil.clamp(PID.calculate(currentArmPos, targetAngleClamped), -MoveArmConstants.maxPIDArmSpeed,MoveArmConstants.maxPIDArmSpeed);
-    armMotor.set(targetAnglePID);
+    armMotor.set(targetAnglePID); //this is a percentage value of -1.0 to 1.0
     SmartDashboard.putNumber("ARM PID", targetAnglePID);
     IntakeCommand.shootPower = power;
     //armPID.setReference(ref, ControlType.kPosition);

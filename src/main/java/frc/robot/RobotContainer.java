@@ -14,14 +14,10 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MoveArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj.RobotController;
 //import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 //import frc.robot.subsystems.IntakeSubsystem;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -52,6 +48,7 @@ public class RobotContainer {
     driveTrainSubsystem.setDefaultCommand(DriveWithJoystickCommand);
     moveArmSubsystem.setDefaultCommand(MoveArmCommand);
 
+    
 
   }
   
