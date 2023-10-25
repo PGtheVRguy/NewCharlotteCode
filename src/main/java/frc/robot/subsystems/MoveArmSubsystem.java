@@ -26,7 +26,8 @@ public class MoveArmSubsystem extends SubsystemBase {
   CANSparkMax armMotor = new CANSparkMax(MoveArmConstants.ArmMotorID, MotorType.kBrushless); //sets up Arm motor
   public RelativeEncoder armEncoder = armMotor.getEncoder(); //sets armEncoder to the motors encoder
   private PIDController PID;
-
+//  0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000+
+//9
 
   public MoveArmSubsystem() {
     armMotor.restoreFactoryDefaults(); //i dunno was told to do dis 
@@ -43,7 +44,6 @@ public class MoveArmSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Arm Pos", armEncoder.getPosition());
   }
-
   public void zeroArm() {
     armEncoder.setPosition(0);
   }
@@ -79,3 +79,10 @@ public class MoveArmSubsystem extends SubsystemBase {
 }
 
 }
+
+
+
+
+
+//88888888***********hyyyyyyyyyyyllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllvvvvv3333333333333333333333333333333333333333333333333333333333333333333333333333333 p4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444j
+//kitty cat wrote those

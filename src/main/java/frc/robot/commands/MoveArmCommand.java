@@ -39,6 +39,7 @@ public class MoveArmCommand extends CommandBase {
     
 
     //auto mode
+    /* 
     if(m_controller.button(4).getAsBoolean()) //======PID======//
     {
       moveArmSubsystem.armSetPID(0,1.2); //HIGH
@@ -54,7 +55,7 @@ public class MoveArmCommand extends CommandBase {
       moveArmSubsystem.armSetPID(269,0.5);
       //moveArmSubsystem.armLow();
     }
-
+    */
     if(m_controller.button(2).getAsBoolean()) //FORCE STOP
     {
       moveArmSubsystem.forceStopArm();

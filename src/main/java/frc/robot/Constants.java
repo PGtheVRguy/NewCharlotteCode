@@ -40,6 +40,17 @@ public final class Constants {
     public static final int minArmPos = 0;
     public static final int maxArmPos = 269;
     public static final double maxPIDArmSpeed = 0.7;
+
+    //positions
+    public static final int highArmPos = 240;
+    public static final int midArmPos = 91;
+    public static final int lowArmPos = 5;
+
+    public static final double highArmPow = 1.2;
+    public static final double midArmPow = 0.6;
+    public static final double lowArmPow = 0.5;
+
+
   }
   public static final class AutonStuff{
     public static final PIDConstants AUTO_TRANSLATION_CONSTANTS = new PIDConstants(0, 0, 0);

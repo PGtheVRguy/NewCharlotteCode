@@ -4,8 +4,10 @@
 
 package frc.robot;
 
+import frc.robot.Constants.MoveArmConstants;
 import frc.robot.commands.DriveWithJoystickCommand;
 import frc.robot.commands.MoveArmCommand;
+import frc.robot.commands.MoveArmPIDCommand;
 import frc.robot.commands.autos.auto_DriveWithJoystickCommand;
 import frc.robot.commands.autos.auto_IntakeCommand;
 import frc.robot.commands.autos.auto_MoveArmCommand;
@@ -18,6 +20,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.subsystems.IntakeSubsystem;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -36,6 +39,7 @@ public class RobotContainer {
 
   private final DriveWithJoystickCommand DriveWithJoystickCommand = new DriveWithJoystickCommand(driveTrainSubsystem);
   private final MoveArmCommand MoveArmCommand = new MoveArmCommand(moveArmSubsystem, m_driverController);
+  private final MoveArmPIDCommand MoveArmPIDCommand = new MoveArmPIDCommand(moveArmSubsystem, m_driverController, 0, 0);
   private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem, m_driverController);
   public double autonTime = 0;
 
@@ -46,22 +50,35 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     driveTrainSubsystem.setDefaultCommand(DriveWithJoystickCommand);
-    moveArmSubsystem.setDefaultCommand(MoveArmCommand);
+    //moveArmSubsystem.setDefaultCommand(MoveArmCommand);
 
     
 
   }
   
   private void configureBindings() {
-    new Trigger(m_driverController.button(1))
-    .onTrue(MoveArmCommand); //Low
-    new Trigger(m_driverController.button(2))
-    .onTrue(MoveArmCommand); //Force stop?
-    new Trigger(m_driverController.button(4))
-    .onTrue(MoveArmCommand); //High
-    new Trigger(m_driverController.button(7))
-    .onTrue(MoveArmCommand); //Zero
+    new Trigger(m_driverController.a())
+    .onTrue(
+      new MoveArmPIDCommand(moveArmSubsystem, m_driverController, MoveArmConstants.lowArmPos, MoveArmConstants.lowArmPow)
+    ); //Low
 
+    new Trigger(m_driverController.x())
+    .onTrue(
+      new MoveArmPIDCommand(moveArmSubsystem, m_driverController, MoveArmConstants.midArmPos, MoveArmConstants.midArmPow)
+    ); //Mid
+
+    new Trigger(m_driverController.y())
+    .onTrue(
+      new MoveArmPIDCommand(moveArmSubsystem, m_driverController, MoveArmConstants.highArmPos, MoveArmConstants.highArmPow)
+    ); //High
+
+
+
+
+    new Trigger(m_driverController.back()) //select
+    .onTrue(MoveArmCommand); //Zero
+    new Trigger(m_driverController.b())
+    .onTrue(MoveArmCommand); //Force stop?
 
     new Trigger(m_driverController.povDown()).onTrue(MoveArmCommand);
     new Trigger(m_driverController.povUp()).onTrue(MoveArmCommand);
