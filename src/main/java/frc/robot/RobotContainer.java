@@ -25,7 +25,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//Cool network tables
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 
 public class RobotContainer {
@@ -39,9 +43,16 @@ public class RobotContainer {
 
   private final DriveWithJoystickCommand DriveWithJoystickCommand = new DriveWithJoystickCommand(driveTrainSubsystem);
   private final MoveArmCommand MoveArmCommand = new MoveArmCommand(moveArmSubsystem, m_driverController);
+  
   private final MoveArmPIDCommand MoveArmPIDCommand = new MoveArmPIDCommand(moveArmSubsystem, m_driverController, 0, 0);
   private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem, m_driverController);
   public double autonTime = 0;
+
+
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
+
+  //double tx = LimelightHelpers.getTX("");
 
 
 
@@ -51,7 +62,7 @@ public class RobotContainer {
     configureBindings();
     driveTrainSubsystem.setDefaultCommand(DriveWithJoystickCommand);
     //moveArmSubsystem.setDefaultCommand(MoveArmCommand);
-
+    
     
 
   }
@@ -88,6 +99,10 @@ public class RobotContainer {
       new Trigger(m_driverController.leftTrigger(0.1))
       .onTrue(intakeCommand);
       new Trigger(m_driverController.button(5)).toggleOnTrue(intakeCommand); //Intake MAX
+
+
+    
+
   }
 
     

@@ -15,6 +15,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
@@ -32,6 +37,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   MotorControllerGroup rightControllerGroup = new MotorControllerGroup(rightMotor1, rightMotor2/* , rightMotor3*/);
   //drive train
   DifferentialDrive differentialDrive = new DifferentialDrive(leftControllerGroup, rightControllerGroup);
+
+  
 
 
 
@@ -51,6 +58,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
     
     rightControllerGroup.setInverted(true);
     leftControllerGroup.setInverted(false);
+
+
+   
+
+  
   }
 
   /**
