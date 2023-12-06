@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.DriveWithJoystickCommand;
 import frc.robot.commands.MoveArmCommand;
+import frc.robot.commands.MoveArmManualCommand;
 import frc.robot.commands.IntakeCommand;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -50,20 +51,16 @@ public class RobotContainer {
     //moveArmSubsystem.setDefaultCommand(MoveArmCommand);
   }
 
-    /**
-     * Use this method to define your trigger->command mappings. Triggers can be created via the
-     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-     * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-     * joysticks}.
-     */
+  
   private void configureBindings() {
 
     new Trigger(m_driverController.button(1)).whileTrue(new MoveArmCommand(moveArmSubsystem, Constants.MoveArmConstants.highArmPos, Constants.MoveArmConstants.highArmPow));
-    new Trigger(m_driverController.button(2)).whileTrue(new MoveArmCommand(moveArmSubsystem, Constants.MoveArmConstants.midArmPos, Constants.MoveArmConstants.midArmPow));
+    new Trigger(m_driverController.button(3)).whileTrue(new MoveArmCommand(moveArmSubsystem, Constants.MoveArmConstants.midArmPos, Constants.MoveArmConstants.midArmPow));
     new Trigger(m_driverController.button(4)).whileTrue(new MoveArmCommand(moveArmSubsystem, Constants.MoveArmConstants.lowArmPos, Constants.MoveArmConstants.lowArmPow));
+
+    new Trigger(m_driverController.button(2)).whileTrue(new MoveArmManualCommand(moveArmSubsystem, 0));
+    new Trigger(m_driverController.povDown()).whileTrue(new MoveArmManualCommand(moveArmSubsystem, Constants.MoveArmConstants.manualSpeed));
+    new Trigger(m_driverController.povUp()).whileTrue(new MoveArmManualCommand(moveArmSubsystem, -Constants.MoveArmConstants.manualSpeed));
 
     new Trigger(m_driverController.rightTrigger(0.1))
       .onTrue(intakeCommand);
@@ -71,6 +68,30 @@ public class RobotContainer {
       .onTrue(intakeCommand);
       //new Trigger(m_driverController.pov(180)).onTrue(intakeCommand);
   }
+  
+  public static double deadband(double value, double deadband) {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
+  }
+
+  public static boolean between(double valueLeast, double valueMost, double value) {
+    if ((value > valueLeast) && (value < valueMost))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
   
   
   /**

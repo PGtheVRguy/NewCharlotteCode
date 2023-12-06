@@ -30,16 +30,19 @@ public final class Constants {
   public static final class IntakeConstants{
     public static final int intakeMotor1ID = 41;
     public static final int intakeMotor2ID = 42;
-    public static final double outakeSpeed = 1.00; //-1=-100%(rev) , 0=0%, 1=100%(max). 
+    public static final double outakeSpeed = 1.00; //-1=-100%(reversed) , 0=0%, 1=100%(max). 
   }
   public static final class MoveArmConstants{
     public static final int ArmMotorID = 51;
-    public static final double armkP = 0.01; // speed
-    public static final double armkI = 0.03; // error
-    public static final double armkD = 0.02; // break
+    public static final double armkP = 0.005; // speed
+    public static final double armkI = 0.1; // error
+    public static final double armkD = 0.15; // break
     public static final int minArmPos = 0;
     public static final int maxArmPos = 269;
     public static final double maxPIDArmSpeed = 0.7;
+
+    public static final double manualSpeed = 0.5;
+
 
     //positions
     public static final int highArmPos = 240;
